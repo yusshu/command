@@ -25,6 +25,11 @@ public class Namespace {
     return value;
   }
 
+  /**
+   * Represents a {@link Namespace} entry key,
+   * it's a combination of a Java Type and an
+   * arbitrary string.
+   */
   private static class Key {
 
     private final Type type;
