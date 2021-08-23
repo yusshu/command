@@ -12,40 +12,40 @@ import java.util.List;
  * {@link CommandManager} method behavior
  */
 public abstract class AbstractCommandManager
-  implements CommandManager {
+    implements CommandManager {
 
-  private CommandAuthorizer authorizer = CommandAuthorizer.NULL;
+    private CommandAuthorizer authorizer = CommandAuthorizer.NULL;
 
-  @Override
-  public CommandAuthorizer getAuthorizer() {
-    return authorizer;
-  }
-
-  @Override
-  public void setAuthorizer(CommandAuthorizer authorizer) {
-    this.authorizer = authorizer;
-  }
-
-  @Override
-  public void register(List<CommandSpec> commands) {
-    for (CommandSpec command : commands) {
-      register(command);
+    @Override
+    public CommandAuthorizer getAuthorizer() {
+        return authorizer;
     }
-  }
 
-  @Override
-  public void parseAndExecute(String commandLine) throws CommandException {
-    execute(parse(commandLine));
-  }
+    @Override
+    public void setAuthorizer(CommandAuthorizer authorizer) {
+        this.authorizer = authorizer;
+    }
 
-  @Override
-  public void parseAndExecute(ArgumentStack stack) throws CommandException {
-    execute(parse(stack));
-  }
+    @Override
+    public void register(List<CommandSpec> commands) {
+        for (CommandSpec command : commands) {
+            register(command);
+        }
+    }
 
-  @Override
-  public CommandParseInfo parse(String commandLine) throws ParseException {
-    return parse(ArgumentStack.splitBySpace(commandLine));
-  }
+    @Override
+    public void parseAndExecute(String commandLine) throws CommandException {
+        execute(parse(commandLine));
+    }
+
+    @Override
+    public void parseAndExecute(ArgumentStack stack) throws CommandException {
+        execute(parse(stack));
+    }
+
+    @Override
+    public CommandParseInfo parse(String commandLine) throws ParseException {
+        return parse(ArgumentStack.splitBySpace(commandLine));
+    }
 
 }

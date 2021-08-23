@@ -5,16 +5,16 @@ package team.unnamed.command.exception;
  * be thrown when parsing a command
  */
 public class ParseException
-  extends CommandException {
+    extends CommandException {
 
-  public ParseException(
-    String messageId,
-    String message
-  ) {
-    super(messageId, message);
-  }
+    public ParseException(
+        String messageId,
+        String message
+    ) {
+        super(messageId, message);
+    }
 
-  public ParseException() {
-  }
+    public ParseException() {
+    }
 
 }

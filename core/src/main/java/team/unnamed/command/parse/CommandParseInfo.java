@@ -8,25 +8,25 @@ import java.util.Map;
 
 public class CommandParseInfo {
 
-  private final Map<CommandElement, Object> values = new HashMap<>();
-  private CommandSpec command;
+    private final Map<CommandElement, Object> values = new HashMap<>();
+    private CommandSpec command;
 
-  public void setCommand(CommandSpec command) {
-    this.command = command;
-  }
+    public CommandSpec getCommand() {
+        return command;
+    }
 
-  public CommandSpec getCommand() {
-    return command;
-  }
+    public void setCommand(CommandSpec command) {
+        this.command = command;
+    }
 
-  public void setValue(CommandElement member, Object value) {
-    values.put(member, value);
-  }
+    public void setValue(CommandElement member, Object value) {
+        values.put(member, value);
+    }
 
-  @Nullable
-  @SuppressWarnings("unchecked")
-  public <T> T getValue(CommandElement member) {
-    return (T) values.get(member);
-  }
+    @Nullable
+    @SuppressWarnings("unchecked")
+    public <T> T getValue(CommandElement member) {
+        return (T) values.get(member);
+    }
 
 }

@@ -9,133 +9,133 @@ import java.util.StringJoiner;
 
 public class ArgumentStack {
 
-  private final List<String> arguments;
-  private int cursor;
+    private final List<String> arguments;
+    private int cursor;
 
-  public ArgumentStack(List<String> arguments) {
-    this.arguments = arguments;
-  }
-
-  public boolean hasNext() {
-    return cursor < arguments.size();
-  }
-
-  public String next() {
-    if (cursor >= arguments.size()) {
-      throw new NoMoreArgumentsException();
-    }
-    return arguments.get(cursor++);
-  }
-
-  public String nextQuoted() {
-    if (cursor >= arguments.size()) {
-      throw new NoMoreArgumentsException();
+    public ArgumentStack(List<String> arguments) {
+        this.arguments = arguments;
     }
 
-    String argument = arguments.get(cursor);
-    char quote = argument.charAt(0);
-
-    // normal argument, just return it
-    if (quote != '"' && quote != '\'') {
-      cursor++;
-      return argument;
+    public static ArgumentStack splitBySpace(String line) {
+        String[] arguments = line.trim().split(" +");
+        return new ArgumentStack(new ArrayList<>(Arrays.asList(arguments)));
     }
 
-    // remove the initial quote
-    argument = argument.substring(1);
-    StringJoiner joiner = new StringJoiner(" ");
+    public boolean hasNext() {
+        return cursor < arguments.size();
+    }
 
-    while (true) {
-      boolean escaped = false;
-      StringBuilder builder = new StringBuilder(argument.length());
-
-      for (int i = 0; i < argument.length(); i++) {
-        char current = argument.charAt(i);
-        if (current == '\\') {
-          escaped = true;
-          continue;
+    public String next() {
+        if (cursor >= arguments.size()) {
+            throw new NoMoreArgumentsException();
         }
-        if (current == quote) {
-          if (escaped) {
-            builder.append(quote);
-            escaped = false;
-            continue;
-          }
+        return arguments.get(cursor++);
+    }
 
-          cursor++;
-          String extra = argument.substring(i + 1);
-          if (!extra.isEmpty()) {
-            arguments.add(cursor, extra);
-          }
-          joiner.add(builder.toString());
-          return joiner.toString();
+    public String nextQuoted() {
+        if (cursor >= arguments.size()) {
+            throw new NoMoreArgumentsException();
         }
 
-        if (escaped) {
-          builder.append('\\');
-          escaped = false;
+        String argument = arguments.get(cursor);
+        char quote = argument.charAt(0);
+
+        // normal argument, just return it
+        if (quote != '"' && quote != '\'') {
+            cursor++;
+            return argument;
         }
 
-        builder.append(current);
-      }
+        // remove the initial quote
+        argument = argument.substring(1);
+        StringJoiner joiner = new StringJoiner(" ");
 
-      if (builder.length() > 0) {
-        joiner.add(builder.toString());
-      }
+        while (true) {
+            boolean escaped = false;
+            StringBuilder builder = new StringBuilder(argument.length());
 
-      // pass to the next argument
-      cursor++;
-      if (cursor >= arguments.size()) {
-        break;
-      } else {
-        argument = arguments.get(cursor);
-      }
+            for (int i = 0; i < argument.length(); i++) {
+                char current = argument.charAt(i);
+                if (current == '\\') {
+                    escaped = true;
+                    continue;
+                }
+                if (current == quote) {
+                    if (escaped) {
+                        builder.append(quote);
+                        escaped = false;
+                        continue;
+                    }
+
+                    cursor++;
+                    String extra = argument.substring(i + 1);
+                    if (!extra.isEmpty()) {
+                        arguments.add(cursor, extra);
+                    }
+                    joiner.add(builder.toString());
+                    return joiner.toString();
+                }
+
+                if (escaped) {
+                    builder.append('\\');
+                    escaped = false;
+                }
+
+                builder.append(current);
+            }
+
+            if (builder.length() > 0) {
+                joiner.add(builder.toString());
+            }
+
+            // pass to the next argument
+            cursor++;
+            if (cursor >= arguments.size()) {
+                break;
+            } else {
+                argument = arguments.get(cursor);
+            }
+        }
+
+        return joiner.toString();
     }
 
-    return joiner.toString();
-  }
-
-  public String remove() {
-    checkNonZeroCursor();
-    return arguments.get(--cursor);
-  }
-
-  public String peek() {
-    if (cursor >= arguments.size()) {
-      throw new NoMoreArgumentsException();
+    public String remove() {
+        checkNonZeroCursor();
+        return arguments.get(--cursor);
     }
-    return arguments.get(cursor);
-  }
 
-  public String current() {
-    checkNonZeroCursor();
-    return arguments.get(cursor - 1);
-  }
-
-  public int getCursor() {
-    return cursor;
-  }
-
-  public void setCursor(int cursor) {
-    if (cursor < 0 || cursor > arguments.size()) {
-      throw new IndexOutOfBoundsException(
-        "Cursor cannot be less than zero or" +
-          " greater than the argument count"
-      );
+    public String peek() {
+        if (cursor >= arguments.size()) {
+            throw new NoMoreArgumentsException();
+        }
+        return arguments.get(cursor);
     }
-    this.cursor = cursor;
-  }
 
-  private void checkNonZeroCursor() {
-    if (cursor == 0) {
-      throw new IllegalStateException("You must advance the" +
-        " stack at least one time before calling this method!");
+    public String current() {
+        checkNonZeroCursor();
+        return arguments.get(cursor - 1);
     }
-  }
 
-  public static ArgumentStack splitBySpace(String line) {
-    String[] arguments = line.trim().split(" +");
-    return new ArgumentStack(new ArrayList<>(Arrays.asList(arguments)));
-  }
+    public int getCursor() {
+        return cursor;
+    }
+
+    public void setCursor(int cursor) {
+        if (cursor < 0 || cursor > arguments.size()) {
+            throw new IndexOutOfBoundsException(
+                "Cursor cannot be less than zero or" +
+                    " greater than the argument count"
+            );
+        }
+        this.cursor = cursor;
+    }
+
+    private void checkNonZeroCursor() {
+        if (cursor == 0) {
+            throw new IllegalStateException("You must advance the" +
+                " stack at least one time before calling this method!");
+        }
+    }
 
 }

@@ -11,23 +11,23 @@ import java.util.List;
  * to provide the argument values.
  */
 public interface CommandArgument
-  extends CommandElement {
+    extends CommandElement {
 
-  @Override
-  default void suggest(
-    CommandParseInfo parseInfo,
-    ArgumentStack stack,
-    List<String> suggestions
-  ) {
-    // just consume
-    if (stack.hasNext()) {
-      stack.next();
+    @Override
+    default void suggest(
+        CommandParseInfo parseInfo,
+        ArgumentStack stack,
+        List<String> suggestions
+    ) {
+        // just consume
+        if (stack.hasNext()) {
+            stack.next();
+        }
     }
-  }
 
-  @Override
-  default <T> T acceptVisitor(CommandElementVisitor<T> visitor) {
-    return visitor.visitArgument(this);
-  }
+    @Override
+    default <T> T acceptVisitor(CommandElementVisitor<T> visitor) {
+        return visitor.visitArgument(this);
+    }
 
 }

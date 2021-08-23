@@ -14,30 +14,30 @@ import java.lang.reflect.Parameter;
  */
 public interface ElementProvider {
 
-  /**
-   * Returns the {@link CommandElement} for the
-   * given {@code parameter} or null if not found
-   */
-  @Nullable
-  CommandElement getMember(Parameter parameter);
+    /**
+     * Checks if the given {@code parameter} is annotated
+     * with {@link Name}. If not, returns the name returned
+     * by {@link Parameter#getName()}, if annotation is present,
+     * it returns {@link Name#value()}
+     */
+    static String getName(Parameter parameter) {
+        Name name = parameter.getAnnotation(Name.class);
+        return name == null ? parameter.getName() : name.value();
+    }
 
-  /**
-   * Checks if the given {@code parameter} is annotated
-   * with {@link Name}. If not, returns the name returned
-   * by {@link Parameter#getName()}, if annotation is present,
-   * it returns {@link Name#value()}
-   */
-  static String getName(Parameter parameter) {
-    Name name = parameter.getAnnotation(Name.class);
-    return name == null ? parameter.getName() : name.value();
-  }
+    /**
+     * Creates a new {@link ElementProvider} instance
+     * that works as a registry. Fluent-api
+     */
+    static DefaultElementProvider createRegistry() {
+        return new DefaultElementProvider();
+    }
 
-  /**
-   * Creates a new {@link ElementProvider} instance
-   * that works as a registry. Fluent-api
-   */
-  static DefaultElementProvider createRegistry() {
-    return new DefaultElementProvider();
-  }
+    /**
+     * Returns the {@link CommandElement} for the
+     * given {@code parameter} or null if not found
+     */
+    @Nullable
+    CommandElement getMember(Parameter parameter);
 
 }

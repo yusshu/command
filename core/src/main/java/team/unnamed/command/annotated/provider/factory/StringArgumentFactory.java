@@ -9,17 +9,17 @@ import team.unnamed.command.parse.impl.StringCommandArgument;
 import java.lang.reflect.Parameter;
 
 public class StringArgumentFactory
-  implements CommandElementFactory {
+    implements CommandElementFactory {
 
-  @Override
-  public CommandElement create(String name, Parameter parameter) {
-    Infinite infinite = parameter.getAnnotation(Infinite.class);
-    return new StringCommandArgument(
-      name,
-      parameter.isAnnotationPresent(Quoted.class),
-      infinite != null,
-      infinite == null ? " " : infinite.value()
-    );
-  }
+    @Override
+    public CommandElement create(String name, Parameter parameter) {
+        Infinite infinite = parameter.getAnnotation(Infinite.class);
+        return new StringCommandArgument(
+            name,
+            parameter.isAnnotationPresent(Quoted.class),
+            infinite != null,
+            infinite == null ? " " : infinite.value()
+        );
+    }
 
 }

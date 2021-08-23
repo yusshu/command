@@ -15,16 +15,24 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Command {
 
-  /** Returns the name of the command */
-  String name();
+    /**
+     * Returns the name of the command
+     */
+    String name();
 
-  /** Returns the aliases of the command */
-  String[] aliases() default {};
+    /**
+     * Returns the aliases of the command
+     */
+    String[] aliases() default {};
 
-  /** Returns the description of the command */
-  String desc() default "";
+    /**
+     * Returns the description of the command
+     */
+    String desc() default "";
 
-  /** Returns the permission node of the command */
-  String permission() default "";
+    /**
+     * Returns the permission node of the command
+     */
+    String permission() default "";
 
 }

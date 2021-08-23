@@ -9,23 +9,23 @@ import org.jetbrains.annotations.Nullable;
  */
 public class CommandException extends RuntimeException {
 
-  private final String messageId;
+    private final String messageId;
 
-  public CommandException(
-    String messageId,
-    String message
-  ) {
-    super(message);
-    this.messageId = messageId;
-  }
+    public CommandException(
+        String messageId,
+        String message
+    ) {
+        super(message);
+        this.messageId = messageId;
+    }
 
-  public CommandException() {
-    this.messageId = null;
-  }
+    public CommandException() {
+        this.messageId = null;
+    }
 
-  @Nullable
-  public String getMessageId() {
-    return messageId;
-  }
+    @Nullable
+    public String getMessageId() {
+        return messageId;
+    }
 
 }

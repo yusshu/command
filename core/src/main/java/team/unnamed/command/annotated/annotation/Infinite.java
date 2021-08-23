@@ -16,10 +16,10 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Infinite {
 
-  /**
-   * Returns the delimiter where
-   * the string arguments will join
-   */
-  String value() default " ";
+    /**
+     * Returns the delimiter where
+     * the string arguments will join
+     */
+    String value() default " ";
 
 }

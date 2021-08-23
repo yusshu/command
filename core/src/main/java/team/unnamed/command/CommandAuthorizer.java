@@ -7,15 +7,17 @@ package team.unnamed.command;
  */
 public interface CommandAuthorizer {
 
-  /** No-op implementation */
-  CommandAuthorizer NULL = (namespace, permission) -> true;
+    /**
+     * No-op implementation
+     */
+    CommandAuthorizer NULL = (namespace, permission) -> true;
 
-  /**
-   * Returns true if the given {@code namespace}
-   * contains information that can authorize the
-   * command execution. Permission is represented
-   * by a string
-   */
-  boolean isAuthorized(Namespace namespace, String permission);
+    /**
+     * Returns true if the given {@code namespace}
+     * contains information that can authorize the
+     * command execution. Permission is represented
+     * by a string
+     */
+    boolean isAuthorized(Namespace namespace, String permission);
 
 }

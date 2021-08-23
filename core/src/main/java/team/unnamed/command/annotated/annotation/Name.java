@@ -15,7 +15,9 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Name {
 
-  /** Returns the argument element name */
-  String value();
+    /**
+     * Returns the argument element name
+     */
+    String value();
 
 }

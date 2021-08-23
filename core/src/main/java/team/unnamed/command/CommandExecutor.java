@@ -1,7 +1,7 @@
 package team.unnamed.command;
 
-import team.unnamed.command.parse.CommandParseInfo;
 import team.unnamed.command.parse.CommandElement;
+import team.unnamed.command.parse.CommandParseInfo;
 
 /**
  * Responsible of executing commands,
@@ -12,15 +12,17 @@ import team.unnamed.command.parse.CommandElement;
 @FunctionalInterface
 public interface CommandExecutor {
 
-  CommandExecutor NULL = parseInfo -> {};
+    CommandExecutor NULL = parseInfo -> {
+    };
 
-  /**
-   * Executes the command
-   * @param parseInfo The parse info, it's supposed
-   *                  to be already parsed by all the
-   *                  {@link CommandElement} of this
-   *                  command
-   */
-  void execute(CommandParseInfo parseInfo);
+    /**
+     * Executes the command
+     *
+     * @param parseInfo The parse info, it's supposed
+     *                  to be already parsed by all the
+     *                  {@link CommandElement} of this
+     *                  command
+     */
+    void execute(CommandParseInfo parseInfo);
 
 }
