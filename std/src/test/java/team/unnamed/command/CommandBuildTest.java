@@ -36,11 +36,10 @@ public class CommandBuildTest {
         Assertions.assertEquals(1, parentElement.getSubCommands().size());
 
         // root command
-        CommandElement argumentsElement = parentElement.getArgumentsElement();
-        Assertions.assertTrue(argumentsElement instanceof SequentialCommandElement);
-        SequentialCommandElement rootCommandArguments = (SequentialCommandElement) argumentsElement;
-        Assertions.assertEquals(1, rootCommandArguments.getElements().size());
-        CommandElement rootCommandArgument = rootCommandArguments.getElements().get(0);
+        SequentialCommandElement argumentsElement = parentElement.getArgumentsElement();
+        Assertions.assertNotNull(argumentsElement);
+        Assertions.assertEquals(1, argumentsElement.getElements().size());
+        CommandElement rootCommandArgument = argumentsElement.getElements().get(0);
         Assertions.assertEquals("parameter", rootCommandArgument.getLabel());
         Assertions.assertTrue(rootCommandArgument instanceof StringCommandArgument);
 

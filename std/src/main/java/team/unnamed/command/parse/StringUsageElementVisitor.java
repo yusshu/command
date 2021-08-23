@@ -3,7 +3,7 @@ package team.unnamed.command.parse;
 import java.util.StringJoiner;
 
 public class StringUsageElementVisitor
-    implements CommandElementVisitor<String> {
+    implements StandardCommandElementVisitor<String> {
 
     @Override
     public String visitSequential(SequentialCommandElement element) {
@@ -19,12 +19,12 @@ public class StringUsageElementVisitor
     public String visitParent(ParentCommandElement element) {
         return element.getLabel() + " <"
             + String.join("|", element.getSubCommands().keySet())
-            + "|<" + element.getArgumentsElement().acceptVisitor(this) + ">";
+            + "|<" + element.getArgumentsElement().acceptVisitor(this) + '>';
     }
 
     @Override
     public String visitArgument(CommandArgument element) {
-        return "<" + element.getLabel() + ">";
+        return '<' + element.getLabel() + '>';
     }
 
     @Override

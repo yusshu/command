@@ -27,7 +27,11 @@ public interface CommandArgument
 
     @Override
     default <T> T acceptVisitor(CommandElementVisitor<T> visitor) {
-        return visitor.visitArgument(this);
+        if (visitor instanceof StandardCommandElementVisitor) {
+            return ((StandardCommandElementVisitor<T>) visitor)
+                .visitArgument(this);
+        }
+        return visitor.visit(this);
     }
 
 }

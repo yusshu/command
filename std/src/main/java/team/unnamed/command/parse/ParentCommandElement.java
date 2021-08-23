@@ -72,7 +72,11 @@ public class ParentCommandElement
 
     @Override
     public <T> T acceptVisitor(CommandElementVisitor<T> visitor) {
-        return visitor.visitParent(this);
+        if (visitor instanceof StandardCommandElementVisitor) {
+            return ((StandardCommandElementVisitor<T>) visitor)
+                .visitParent(this);
+        }
+        return visitor.visit(this);
     }
 
 }

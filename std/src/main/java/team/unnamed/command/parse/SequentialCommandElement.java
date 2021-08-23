@@ -77,7 +77,11 @@ public class SequentialCommandElement
 
     @Override
     public <T> T acceptVisitor(CommandElementVisitor<T> visitor) {
-        return visitor.visitSequential(this);
+        if (visitor instanceof StandardCommandElementVisitor) {
+            return ((StandardCommandElementVisitor<T>) visitor)
+                .visitSequential(this);
+        }
+        return visitor.visit(this);
     }
 
     @Override
